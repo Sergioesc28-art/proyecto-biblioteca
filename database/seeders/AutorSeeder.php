@@ -3,19 +3,33 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
-class UserSeeder extends Seeder
+class AutorSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('users')->insert([
+        DB::table('autor')->insert([
             [
-                'name' => 'Admin',
-                'email' => 'admin@mail.com',
-                'password' => Hash::make('123456'),
-            ]
+                'nombre' => 'Juan Rulfo',
+                'pais_id' => 1, // México
+            ],
+            [
+                'nombre' => 'Miguel de Cervantes',
+                'pais_id' => 2, // España
+            ],
+            [
+                'nombre' => 'Jorge Luis Borges',
+                'pais_id' => 3, // Argentina
+            ],
+            [
+                'nombre' => 'Gabriel García Márquez',
+                'pais_id' => 4, // Colombia
+            ],
+            [
+                'nombre' => 'Ernest Hemingway',
+                'pais_id' => 5, // Estados Unidos
+            ],
         ]);
     }
 }
