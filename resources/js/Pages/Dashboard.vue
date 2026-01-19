@@ -1,6 +1,14 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+
+// Recibimos los datos del controlador
+const props = defineProps({
+    stats: {
+        type: Object,
+        default: () => ({ listaStock: [] }) // Esto evita que sea undefined
+    }
+});
 </script>
 
 <template>
@@ -18,59 +26,68 @@ import { Head } from '@inertiajs/vue3';
                 
                 <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
                     
-                    <div class="p-5 bg-white rounded-xl shadow-sm border-t-4 border-blue-500 hover:shadow-md transition-shadow">
+                    <div class="p-5 bg-white rounded-xl shadow-sm border-t-4 border-blue-500">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm font-medium text-gray-500 uppercase">Libros en Stock</p>
-                                <p class="text-2xl font-bold text-gray-900">450</p>
+                                <p class="text-sm font-medium text-gray-500 uppercase">Libros Monitoreados</p>
+                                <p class="text-lg font-bold text-gray-900">Stock Actual</p>
                             </div>
                             <div class="p-3 bg-blue-100 rounded-full text-blue-600 text-2xl">📖</div>
                         </div>
-                        <p class="mt-2 text-xs text-blue-600 font-semibold">4 libros en nivel crítico</p>
+                        <ul class="mt-2 text-xs text-gray-600">
+                            <li v-for="libro in stats.listaStock" :key="libro.titulo" class="flex justify-between">
+                                <span>{{ libro.titulo }}:</span>
+                                <span class="font-bold text-blue-600">{{ libro.stock }}</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div class="p-5 bg-white rounded-xl shadow-sm border-t-4 border-purple-500 hover:shadow-md transition-shadow">
+                    <div class="p-5 bg-white rounded-xl shadow-sm border-t-4 border-purple-500">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm font-medium text-gray-500 uppercase">Género más visitado</p>
-                                <p class="text-2xl font-bold text-gray-900">Terror</p>
+                                <p class="text-2xl font-bold text-gray-900">{{ stats.genero }}</p>
                             </div>
                             <div class="p-3 bg-purple-100 rounded-full text-purple-600 text-2xl">👻</div>
                         </div>
-                        <p class="mt-2 text-xs text-purple-600 font-semibold">+12% este semestre</p>
+                        <p class="mt-2 text-xs text-purple-600 font-semibold">Tendencia del semestre</p>
                     </div>
 
-                    <div class="p-5 bg-white rounded-xl shadow-sm border-t-4 border-red-500 hover:shadow-md transition-shadow">
+                    <div class="p-5 bg-white rounded-xl shadow-sm border-t-4 border-orange-500">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm font-medium text-gray-500 uppercase">Deudores Críticos</p>
-                                <p class="text-2xl font-bold text-gray-900">12</p>
-                            </div>
-                            <div class="p-3 bg-red-100 rounded-full text-red-600 text-2xl">⚠️</div>
-                        </div>
-                        <p class="text-xs text-red-600 mt-2 font-semibold">+10 semanas de retraso</p>
-                    </div>
-
-                    <div class="p-5 bg-white rounded-xl shadow-sm border-t-4 border-orange-500 hover:shadow-md transition-shadow">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500 uppercase">Libros Prestados</p>
-                                <p class="text-2xl font-bold text-gray-900">85</p>
+                                <p class="text-sm font-medium text-gray-500 uppercase">Libro Estrella</p>
+                                <p class="text-sm font-bold text-gray-900">{{ stats.libroMas }}</p>
                             </div>
                             <div class="p-3 bg-orange-100 rounded-full text-orange-600 text-2xl">🔖</div>
                         </div>
-                        <p class="text-xs text-orange-600 mt-2 font-semibold">Total del semestre</p>
+                        <p class="text-xs text-orange-600 mt-2 font-semibold">El favorito de los lectores</p>
+                    </div>
+
+                    <div class="p-5 bg-white rounded-xl shadow-sm border-t-4 border-gray-400">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500 uppercase">Menos Buscado</p>
+                                <p class="text-sm font-bold text-gray-900">{{ stats.libroMenos }}</p>
+                            </div>
+                            <div class="p-3 bg-gray-100 rounded-full text-gray-600 text-2xl">📉</div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">Requiere más promoción</p>
                     </div>
                 </div>
 
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-xl border border-gray-200">
                     <div class="p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-bold text-gray-800 italic">Reporte General del Semestre</h3>
-                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition">Ver todos los préstamos</button>
-                        </div>
-                        <div class="h-64 flex items-center justify-center border-2 border-dashed border-gray-200 rounded-lg bg-gray-50 text-gray-400">
-                            Próximamente: Gráfico de libros más prestados y Tabla de Deudores
+                        <h3 class="text-lg font-bold text-gray-800 italic mb-4">📍 Reporte de Origen y Autoría</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-blue-50 rounded-lg">
+                                <p class="text-gray-600">Nacionalidad predominante:</p>
+                                <p class="text-xl font-bold text-blue-800">{{ stats.pais }}</p>
+                            </div>
+                            <div class="p-4 bg-green-50 rounded-lg">
+                                <p class="text-gray-600">Autor con más libros:</p>
+                                <p class="text-xl font-bold text-green-800">{{ stats.autor }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

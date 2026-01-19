@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController; // IMPORTANTE: Agregamos esta línea
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -9,9 +10,10 @@ Route::get('/', function () {
     return Inertia::render('Auth/Login', []);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// CORRECCIÓN: Ahora el dashboard usa el DashboardController
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 // Rutas de la Biblioteca
 Route::middleware(['auth', 'verified'])->group(function () {
