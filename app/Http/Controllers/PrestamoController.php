@@ -12,36 +12,29 @@ use Carbon\Carbon;
 
 class PrestamoController extends Controller
 {
-    // Listado de préstamos
+    // LISTADO DE PRÉSTAMOS
     public function index()
     {
         return Inertia::render('Prestamos/Index', [
-            'prestamos' => Prestamo::with(['libro', 'user'])->get()
+            'prestamos' => Prestamo::with(['libro', 'user'])->get(),
+            'libros'    => Libro::all(),
+            'users'     => User::all(),
         ]);
     }
 
-    // Formulario crear préstamo
-    public function create()
-    {
-        return Inertia::render('Prestamos/Create', [
-            'libros' => Libro::all(),
-            'usuarios' => User::all()
-        ]);
-    }
-
-    // Guardar préstamo
+    // CREAR PRÉSTAMO
     public function store(Request $request)
     {
         $request->validate([
             'libro_id' => 'required|exists:libros,id_libro',
-            'user_id' => 'required|exists:users,id',
+            'user_id'  => 'required|exists:users,id',
             'fecha_prestamo' => 'required|date',
             'fecha_devolucion_esperada' => 'required|date|after_or_equal:fecha_prestamo',
         ]);
 
         Prestamo::create([
             'libro_id' => $request->libro_id,
-            'user_id' => $request->user_id,
+            'user_id'  => $request->user_id,
             'fecha_prestamo' => $request->fecha_prestamo,
             'fecha_devolucion_esperada' => $request->fecha_devolucion_esperada,
             'fecha_devolucion_real' => null,
@@ -50,7 +43,7 @@ class PrestamoController extends Controller
         return redirect()->route('prestamos.index');
     }
 
-    // Ver préstamo
+    // VER PRÉSTAMO
     public function show($id)
     {
         return Inertia::render('Prestamos/Show', [
@@ -58,28 +51,28 @@ class PrestamoController extends Controller
         ]);
     }
 
-    // Registrar devolución
+    // ACTUALIZAR / DEVOLUCIÓN
     public function update(Request $request, $id)
     {
         $request->validate([
-            'fecha_devolucion_real' => 'nullable|date'
+            'fecha_devolucion_real' => 'nullable|date',
         ]);
 
         Prestamo::where('id_prestamo', $id)->update([
-            'fecha_devolucion_real' => $request->fecha_devolucion_real
+            'fecha_devolucion_real' => $request->fecha_devolucion_real,
         ]);
 
         return redirect()->route('prestamos.index');
     }
 
-    // Eliminar préstamo
+    // ELIMINAR PRÉSTAMO
     public function destroy($id)
     {
         Prestamo::where('id_prestamo', $id)->delete();
         return redirect()->route('prestamos.index');
     }
 
-    //  Libros más y menos prestados
+    // ESTADÍSTICAS
     public function estadisticas()
     {
         $masPrestados = Prestamo::select(
@@ -106,7 +99,7 @@ class PrestamoController extends Controller
         ]);
     }
 
-    //  Último semestre
+    // ÚLTIMO SEMESTRE
     public function semestre()
     {
         $inicio = Carbon::now()->subMonths(6);
