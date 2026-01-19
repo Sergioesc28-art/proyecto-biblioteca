@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             GenerosSeeder::class,
             UserSeeder::class,
             LibroSeeder::class,
-            PrestamoSeeder::class,
+            PrestamosSeeder::class,
         ]);
     }
 }
