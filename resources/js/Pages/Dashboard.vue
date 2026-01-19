@@ -64,7 +64,7 @@ const props = defineProps({
                         <p class="text-xs text-orange-600 mt-2 font-semibold">El favorito de los lectores</p>
                     </div>
 
-                    <div class="p-5 bg-white rounded-xl shadow-sm border-t-4 border-gray-400">
+                 <div class="p-5 bg-white rounded-xl shadow-sm border-t-4 border-gray-400">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm font-medium text-gray-500 uppercase">Menos Buscado</p>
@@ -73,6 +73,22 @@ const props = defineProps({
                             <div class="p-3 bg-gray-100 rounded-full text-gray-600 text-2xl">📉</div>
                         </div>
                         <p class="text-xs text-gray-500 mt-2">Requiere más promoción</p>
+                    </div>
+                </div>
+
+                <div class="mb-8 p-6 bg-gradient-to-r from-green-600 to-green-500 rounded-2xl shadow-lg text-white">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-6">
+                            <div class="bg-white/20 p-4 rounded-full text-4xl">🏆</div>
+                            <div>
+                                <h3 class="text-xl font-bold opacity-90 uppercase tracking-wider">Lector Estrella del Semestre</h3>
+                                <p class="text-4xl font-black mt-1">{{ stats.usuarioTop }}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-5xl font-bold">{{ stats.totalPrestamos }}</p>
+                            <p class="text-sm uppercase font-bold opacity-80">Préstamos Totales</p>
+                        </div>
                     </div>
                 </div>
 

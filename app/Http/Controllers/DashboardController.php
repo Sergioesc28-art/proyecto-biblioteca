@@ -32,6 +32,14 @@ class DashboardController extends Controller {
             ->with('autor')
             ->groupBy('autor_id')->orderBy('total', 'desc')->first();
 
+        // Usuario que más prestó libros
+        $usuarioTop = DB::table('users')
+            ->join('prestamos', 'users.id', '=', 'prestamos.user_id')
+            ->select('users.nombre', DB::raw('count(prestamos.id_prestamo) as total_prestamos'))
+            ->groupBy('users.id', 'users.nombre')
+            ->orderBy('total_prestamos', 'desc')
+            ->first();
+
         return Inertia::render('Dashboard', [
             'stats' => [
                 'libroMas' => $libroMas->titulo ?? 'N/A',
@@ -39,7 +47,9 @@ class DashboardController extends Controller {
                 'genero' => $generoTop->nombre ?? 'N/A',
                 'pais' => $paisTop->nombre ?? 'N/A',
                 'autor' => ($autorTop && $autorTop->autor) ? $autorTop->autor->nombre : 'N/A',
-                'listaStock' => $inventario
+                'listaStock' => $inventario,
+                'usuarioTop' => ($usuarioTop) ? $usuarioTop->nombre : 'N/A',
+                'totalPrestamos' => ($usuarioTop) ? $usuarioTop->total_prestamos : 0,
             ]
         ]);
     }
