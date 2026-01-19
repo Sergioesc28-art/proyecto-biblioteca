@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
                 'nombre' => 'Brandon',
                 'apellido_paterno' => 'Jimenez',
                 'apellido_materno' => 'Hau',
-                'email' => 'brandon@mail.com',
+                'email' => 'brandonhau373@gmail.com',
                 'password' => Hash::make('123456'),
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -6,6 +6,7 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
+import { LucideAirplay } from 'lucide-vue-next';
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -37,10 +38,10 @@ const showingNavigationDropdown = ref(false);
                                     :href="route('dashboard')"
                                     :active="route().current('dashboard')"
                                 >
-                                    Dashboard
+                                    Inicio
                                 </NavLink>
                                 <NavLink :href="route('libros.index')" :active="route().current('libros.*')">
-                                        Libros
+                                        Libros y Autores
                                     </NavLink>
 
                                     <NavLink :href="route('prestamos.index')" :active="route().current('prestamos.*')">
@@ -59,7 +60,7 @@ const showingNavigationDropdown = ref(false);
                                                 type="button"
                                                 class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
                                             >
-                                                {{ $page.props.auth.user.name }}
+                                                {{ $page.props.auth.user.nombre }}
 
                                                 <svg
                                                     class="-me-0.5 ms-2 h-4 w-4"
@@ -81,14 +82,14 @@ const showingNavigationDropdown = ref(false);
                                         <DropdownLink
                                             :href="route('profile.edit')"
                                         >
-                                            Profile
+                                            Perfil
                                         </DropdownLink>
                                         <DropdownLink
                                             :href="route('logout')"
                                             method="post"
                                             as="button"
                                         >
-                                            Log Out
+                                            Cerrar Sesión
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
@@ -163,7 +164,7 @@ const showingNavigationDropdown = ref(false);
                             <div
                                 class="text-base font-medium text-gray-800"
                             >
-                                {{ $page.props.auth.user.name }}
+                                {{ $page.props.auth.user.nombre }}
                             </div>
                             <div class="text-sm font-medium text-gray-500">
                                 {{ $page.props.auth.user.email }}

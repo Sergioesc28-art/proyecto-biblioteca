@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('genero_id')
                   ->constrained('generos', 'id_genero')
                   ->onDelete('cascade');
+
+            $table->integer('stock')->default(0);
         });
     }
 

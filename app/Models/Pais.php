@@ -19,4 +19,10 @@ class Pais extends Model
     protected $fillable = [
         'nombre',
     ];
+
+
+    public function autores()
+    {
+        return $this->hasMany(Autor::class, 'pais_id', 'id_pais');
+    }
 }

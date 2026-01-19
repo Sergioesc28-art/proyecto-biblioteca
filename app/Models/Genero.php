@@ -19,4 +19,9 @@ class Genero extends Model
     protected $fillable = [
         'nombre',
     ];
+
+    public function libros()
+    {
+        return $this->hasMany(Libro::class, 'genero_id', 'id_genero');
+    }
 }
