@@ -1,23 +1,34 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PrestamoController;
+use App\Http\Controllers\DashboardController; // IMPORTANTE: Agregamos esta línea
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Inertia::render('Auth/Login', []);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// CORRECCIÓN: Ahora el dashboard usa el DashboardController
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+// Rutas de la Biblioteca
+Route::middleware(['auth', 'verified'])->group(function () {
+    
+    // Ruta para ver la lista de Libros
+    Route::get('/libros', function () {
+        return Inertia::render('Libros/Index');
+    })->name('libros.index');
+
+    // Ruta para ver la lista de Préstamos
+    Route::get('/prestamos', function () {
+        return Inertia::render('Prestamos/Index');
+    })->name('prestamos.index');
+
+});
 
 Route::middleware('auth')->group(function () {
 
