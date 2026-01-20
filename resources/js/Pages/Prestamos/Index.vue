@@ -120,10 +120,18 @@ const submit = async () => {
               <!-- Usuario -->
               <div>
                 <label class="block text-sm font-medium text-gray-700">Usuario</label>
-                <select v-model="form.user_id" class="mt-1 block w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                <select
+                  v-model="form.user_id"
+                  class="mt-1 block w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                >
                   <option value="">Seleccione un usuario</option>
-                  <option v-for="user in users" :key="user.id" :value="user.id">
-                    {{ user.name }}
+
+                  <option
+                    v-for="user in users"
+                    :key="user.id"
+                    :value="user.id"
+                  >
+                    {{ user.nombre }} {{ user.apellido_paterno }} {{ user.apellido_materno }}
                   </option>
                 </select>
               </div>
@@ -169,7 +177,11 @@ const submit = async () => {
               <tbody class="divide-y divide-gray-200">
                 <tr v-for="prestamo in prestamosList" :key="prestamo.id_prestamo">
                   <td class="px-6 py-4">{{ prestamo.libro?.titulo ?? '—' }}</td>
-                  <td class="px-6 py-4">{{ prestamo.user?.name ?? '—' }}</td>
+                  <td>
+                    {{ prestamo.user?.nombre }}
+                    {{ prestamo.user?.apellido_paterno }}
+                    {{ prestamo.user?.apellido_materno }}
+                  </td>
                   <td class="px-6 py-4">{{ prestamo.fecha_prestamo }}</td>
                   <td class="px-6 py-4">
                     <span v-if="prestamo.fecha_devolucion_real" class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">
