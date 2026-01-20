@@ -20,13 +20,13 @@ class Prestamo extends Model
         'fecha_devolucion_real',
     ];
 
-    // 📘 Relación libro
+    // Relación libro
     public function libro()
     {
         return $this->belongsTo(Libro::class, 'libro_id', 'id_libro');
     }
 
-    // 👤 Relación usuario
+    // Relación usuario
     public function user()
     {
         return $this->belongsTo(User::class);
