@@ -16,17 +16,19 @@ const props = defineProps({
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="text-2xl font-bold leading-tight text-blue-900">
-                📚 Sistema de Gestión de Biblioteca
+            <h2 class="text-center text-3xl font-bold leading-tight text-blue-900">
+                Sistema de Gestión de Biblioteca
             </h2>
+
+            <h3 class="text-center text-xl font-semibold text-gray-700">Buen día, {{ $page.props.auth.user.nombre }}</h3>
         </template>
 
         <div class="py-12 bg-gray-50">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                
+
                 <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
-                    
-                    <div class="p-5 bg-white rounded-xl shadow-sm border-t-4 border-blue-500">
+
+                    <div class="p-5 bg-white rounded-xl shadow-sm border-t-4 border-blue-500 hover:shadow-md transition-shadow">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm font-medium text-gray-500 uppercase">Libros Monitoreados</p>

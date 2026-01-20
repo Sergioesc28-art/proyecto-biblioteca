@@ -11,7 +11,7 @@ class Libro extends Model
     // 1. Especificar tabla y llave primaria (según tus capturas)
     protected $table = 'libro';
     protected $primaryKey = 'id_libro';
-    public $timestamps = false; 
+    public $timestamps = false;
 
     protected $fillable = ['titulo', 'autor_id', 'genero_id', 'stock'];
 
@@ -29,5 +29,10 @@ class Libro extends Model
         // 'autor_id' es la FK en tu tabla libro
         // 'id_autor' es la PK en tu tabla autor
         return $this->belongsTo(Autor::class, 'autor_id', 'id_autor');
+    }
+
+    public function genero(): BelongsTo
+    {
+        return $this->belongsTo(Genero::class, 'genero_id', 'id_genero');
     }
 }

@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Evitar fallo si la columna ya fue creada en la migración base
+        if (Schema::hasColumn('libro', 'stock')) {
+            return;
+        }
+
         Schema::table('libro', function (Blueprint $table) {
-            // Aquí agregamos la columna que falta para el Punto 5
-            $table->integer('stock')->default(10)->after('genero_id'); 
+            $table->integer('stock')->default(10)->after('genero_id');
         });
     }
 
@@ -22,8 +26,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (!Schema::hasColumn('libro', 'stock')) {
+            return;
+        }
+
         Schema::table('libro', function (Blueprint $table) {
-            // Esto es por si alguna vez quieres deshacer el cambio
             $table->dropColumn('stock');
         });
     }
